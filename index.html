@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>全台醫療機構地圖</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map { height: 600px; width: 100%; }
+        body { font-family: Arial, sans-serif; margin: 20px; }
+    </style>
+</head>
+<body>
+    <h2>台灣醫療機構分佈圖</h2>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // 1. 初始化地圖，中心點設在台灣
+        const map = L.map('map').setView([23.6, 121.0], 7);
+
+        // 2. 設定底圖 (OpenStreetMap)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // 3. 模擬醫療機構資料 (實際開發時請透過 fetch 讀取 API 或 JSON)
+        const clinics = [
+            { name: "台北榮民總醫院", lat: 25.1209, lng: 121.5204, info: "醫學中心" },
+            { name: "台中榮民總醫院", lat: 24.1822, lng: 120.6033, info: "醫學中心" },
+            { name: "高雄長庚醫院", lat: 22.6525, lng: 120.3552, info: "醫學中心" }
+        ];
+
+        // 4. 標記到地圖上
+        clinics.forEach(place => {
+            L.marker([place.lat, place.lng])
+                .addTo(map)
+                .bindPopup(`<b>${place.name}</b><br>${place.info}`);
+        });
+    </script>
+</body>
+</html>
